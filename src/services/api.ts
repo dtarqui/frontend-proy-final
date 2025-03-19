@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Task } from "../types";
 
-const API_BASE_URL = "http://localhost:3001/api"; // Replace with your actual API base URL
+const API_BASE_URL = "https://backend-proy-final.onrender.com/api"; // Replace with your actual API base URL
 
 const getAuthToken = () => {
   return localStorage.getItem("authToken");
