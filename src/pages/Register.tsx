@@ -1,30 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { authenticateUser } from "../services/api";
+import { registerUser } from "../services/api";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { isAuthenticated, login } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/dashboard");
-    }
-  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await authenticateUser(username, password);
-      const { token } = response;
-
-      login(token);
+      // Replace with your register API call
+      const response = await registerUser(username, name, email, password);
+      console.log(response);
+      alert(response.message);
+      setTimeout(() => navigate("/"), 1000);
     } catch (error) {
-      setError("Usuario o contraseña invalidos");
+      setError("Error al registrar el usuario. Inténtalo de nuevo.");
     }
   };
 
@@ -32,8 +27,8 @@ const Login: React.FC = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h2>Bienvenido</h2>
-          <p>Ingresa tus credenciales para acceder a tu cuenta</p>
+          <h2>Crear Cuenta</h2>
+          <p>Completa los campos para registrarte</p>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -42,18 +37,6 @@ const Login: React.FC = () => {
           <div className="form-group">
             <label htmlFor="username">Usuario</label>
             <div className="input-group">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
               <input
                 id="username"
                 type="text"
@@ -66,20 +49,36 @@ const Login: React.FC = () => {
           </div>
 
           <div className="form-group">
+            <label htmlFor="name">Nombre</label>
+            <div className="input-group">
+              <input
+                id="name"
+                type="text"
+                placeholder="Ingresa tu nombre"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email">Correo Electrónico</label>
+            <div className="input-group">
+              <input
+                id="email"
+                type="email"
+                placeholder="Ingresa tu correo"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
             <label htmlFor="password">Contraseña</label>
             <div className="input-group">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-              </svg>
               <input
                 id="password"
                 type="password"
@@ -92,11 +91,11 @@ const Login: React.FC = () => {
           </div>
 
           <button type="submit" className="submit-button">
-            Iniciar sesion
+            Registrarse
           </button>
 
           <div className="signup-link">
-            No tienes una cuenta? <a href="/register">Registrate</a>
+            ¿Ya tienes una cuenta? <a href="/">Inicia sesión</a>
           </div>
         </form>
       </div>
@@ -104,4 +103,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;
