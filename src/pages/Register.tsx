@@ -95,7 +95,14 @@ const Register: React.FC = () => {
           </button>
 
           <div className="signup-link">
-            ¿Ya tienes una cuenta? <a href="/">Inicia sesión</a>
+            ¿Ya tienes una cuenta?{" "}
+            <button
+              type="button"
+              className="link-button"
+              onClick={() => navigate("/")}
+            >
+              Inicia sesión
+            </button>
           </div>
         </form>
       </div>
