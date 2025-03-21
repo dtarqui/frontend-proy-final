@@ -32,7 +32,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, setTasks }) => {
         const updated = await updateTaskById(taskToModify.id, updatedTask);
         setTasks((prevTasks) =>
           prevTasks.map((task) =>
-            task.id === taskToModify.id ? updated : task
+            task.id === taskToModify.id ? updated.task : task
           )
         );
       } catch (error) {
